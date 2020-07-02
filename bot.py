@@ -19,7 +19,8 @@ async def play_sound(message, file, sleepTime):
     voice.play(discord.FFmpegPCMAudio(executable="C:/Users/Darell/Downloads/ffmpeg.exe",
                                       source=file))  # play sound effect
 
-    # if (message.guild.voice_client.is_playing() == False): #PLEASE GET THIS SHIT TO WORK #TODO - REMOVE THE NEED FOR A SLEEP TIMER 
+    # if (message.guild.voice_client.is_playing() == False): #PLEASE GET THIS SHIT TO WORK #TODO - REMOVE THE NEED FOR A SLEEP TIMER
+        # await.message.guild.voice_client.disconect()
     time.sleep(sleepTime)  # wait 5 seconds
     await message.guild.voice_client.disconnect()  # disconnect bot once audio finishes playing
 
@@ -34,7 +35,7 @@ async def print_commands(message):
 
 # print all the sounds the bot can do
 async def print_sounds(message):
-    await message.chanel.send("!wow - cute uwu anime wow\n"
+    await message.channel.send("!wow - cute uwu anime wow\n"
                               "!jazz - you like jazz? :smirk:\n"
                               "!hello - :frowning:\n"
                               "!headshot - MY HANDS ARE SHAKING\n")
@@ -75,6 +76,9 @@ async def on_message(message):
 
     if message.content == "!help":  # List all possible commands the bot will respond to
         await print_commands(message)
+
+    if message.content == "!help sounds":
+        await print_sounds(message)
 
     # Sound effect commands
     if message.content == "!wow":  # play anime wow sound effect
