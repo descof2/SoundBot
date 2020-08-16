@@ -2,10 +2,8 @@ import os
 import discord
 import time
 
-keyFile = open("C:/Users/Darell/Desktop/DiscordBot/key.txt", "r")
-TOKEN = keyFile.readline()
+TOKEN = os.environ['BOT_TOKEN']
 client = discord.Client()
-keyFile.close()
 
 
 @client.event  # startup
@@ -16,8 +14,7 @@ async def on_ready():
 # Function that will connect bot to channel, play sound effect and then disconnect according to the sleep timer provided
 async def play_sound(message, file, sleepTime):
     voice = await message.author.voice.channel.connect()  # bot connects to voice channel ONLY IF the member who called the command is already in the channel
-    voice.play(discord.FFmpegPCMAudio(executable="C:/Users/Darell/Downloads/ffmpeg.exe",
-                                      source=file))  # play sound effect
+    voice.play(discord.FFmpegOpusAudio(source=f'sounds/{file}')) 
 
     # if (message.guild.voice_client.is_playing() == False): #PLEASE GET THIS SHIT TO WORK #TODO - REMOVE THE NEED FOR A SLEEP TIMER
     # await.message.guild.voice_client.disconect()
