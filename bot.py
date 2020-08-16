@@ -2,10 +2,8 @@ import os
 import discord
 import time
 
-keyFile = open("C:/Users/Darell/Desktop/DiscordBot/key.txt", "r")
-TOKEN = keyFile.readline()
+TOKEN = os.environ['BOT_TOKEN']
 client = discord.Client()
-keyFile.close()
 
 
 @client.event  # startup
@@ -16,8 +14,7 @@ async def on_ready():
 # Function that will connect bot to channel, play sound effect and then disconnect according to the sleep timer provided
 async def play_sound(message, file, sleepTime):
     voice = await message.author.voice.channel.connect()  # bot connects to voice channel ONLY IF the member who called the command is already in the channel
-    voice.play(discord.FFmpegPCMAudio(executable="C:/Users/Darell/Downloads/ffmpeg.exe",
-                                      source=file))  # play sound effect
+    voice.play(discord.FFmpegOpusAudio(source=f'sounds/{file}'))  # play sound effect
 
     # if (message.guild.voice_client.is_playing() == False): #PLEASE GET THIS SHIT TO WORK #TODO - REMOVE THE NEED FOR A SLEEP TIMER
         # await.message.guild.voice_client.disconect()
@@ -82,14 +79,16 @@ async def on_message(message):
 
     # Sound effect commands
     if message.content == "!wow":  # play anime wow sound effect
-        await play_sound(message, "C:/Users/Darell/Desktop/Discordbot/wow.mp3", 2)
+        await play_sound(message, "wow.mp3", 2)
 
     if message.content == "!jazz":  # play jazz sound effect
-        await play_sound(message, "C:/Users/Darell/Desktop/Discordbot/jazz.mp3", 1)
+        await play_sound(message, "jazz.mp3", 1)
 
     if message.content == "!headshot":  # play BOOM HEADSHOT effect
-        await play_sound(message, "C:/Users/Darell/Desktop/DiscordBot/headshot.mp3", 9)
+        await play_sound(message, "headshot.mp3", 9)
 
+    if message.content == "!test":  # play BOOM HEADSHOT effect
+        await play_sound(message, "this_is_where_mp3s_go.mp3", 9)
 
 # end
 client.run(TOKEN)
