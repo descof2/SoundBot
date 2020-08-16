@@ -2,10 +2,10 @@ import os
 import discord
 import time
 
-keyFile = open("C:/Users/Darell/Desktop/DiscordBot/key.txt", "r")
-TOKEN = keyFile.readline()
+
 client = discord.Client()
-keyFile.close()
+TOKEN = os.environ['BOT_TOKEN']
+
 
 
 @client.event  # startup
