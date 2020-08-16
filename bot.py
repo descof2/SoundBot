@@ -21,7 +21,7 @@ async def play_sound(message, file, sleepTime):
     await message.guild.voice_client.disconnect()  # disconnect bot once audio finishes playing
 
 
-# print all the commands the bot can do
+# Print all the commands the bot can do
 async def print_commands(message):
     await message.channel.send("!help - list all usable commands \n"
                                "!hello - :frowning:\n"
@@ -30,7 +30,7 @@ async def print_commands(message):
                                "!generaltime - Move everyone from jackbox back to general")
 
 
-# print all the sounds the bot can do
+# Print all the sounds the bot can play
 async def print_sounds(message):
     await message.channel.send("!wow - cute uwu anime wow\n"
                                "!jazz - you like jazz? :smirk:\n"
@@ -46,12 +46,11 @@ async def move_member(movingMembers, destination):
         
 @client.event  # Bot responding to specific strings or commands from users
 async def on_message(message):
-    if message.author.bot:
+    if message.author.bot: # Ensure that the bot is not responding to its own messages
         return
 
     userInput = message.content.split()
-
-    print(userInput)
+    
     if userInput[0] == "!hello":  # Basic printing
         await message.channel.send(str(message.author) + " why did she leave me...")
 
@@ -82,7 +81,7 @@ async def on_message(message):
 
         await move_member(currentMembers, generalChannel)
 
-    if userInput[0] == "!help" and userInput[1] == "sounds":
+    if userInput[0] == "!help" and userInput[1] == "sounds": # List all sounds that the bot can play
         await print_sounds(message)
         
     if userInput[0] == "!help":  # List all possible commands the bot will respond to
@@ -101,7 +100,7 @@ async def on_message(message):
     if userInput[0] == "!thot":  # play thot sound effect
         await play_sound(message, "thot.mp3", 5)
 
-    if userInput[0] == "!poll":
+    if userInput[0] == "!poll": #TODO
         pollQuestion = ""
         for i in range(1, len(userInput)):
             pollQuestion += userInput[i]
@@ -110,8 +109,9 @@ async def on_message(message):
         await message.add_reaction(emoji='👍')
 
     if userInput[0] == "!stop":
-        await message.guild.voice_client.disconnect()  # disconnect bot
+        await message.guild.voice_client.disconnect()  # Force disconnect bot from voice
 
-
+    userInput = [] # Clean out the list after use
+    
 # end
 client.run(TOKEN)
