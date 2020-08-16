@@ -2,11 +2,8 @@ import os
 import discord
 import time
 
-
 client = discord.Client()
 TOKEN = os.environ['BOT_TOKEN']
-
-
 
 @client.event  # startup
 async def on_ready():
