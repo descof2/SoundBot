@@ -2,8 +2,10 @@ import os
 import discord
 import time
 
-TOKEN = os.environ['BOT_TOKEN']
+keyFile = open("C:/Users/Darell/Desktop/DiscordBot/key.txt", "r")
+TOKEN = keyFile.readline()
 client = discord.Client()
+keyFile.close()
 
 
 @client.event  # startup
@@ -14,10 +16,11 @@ async def on_ready():
 # Function that will connect bot to channel, play sound effect and then disconnect according to the sleep timer provided
 async def play_sound(message, file, sleepTime):
     voice = await message.author.voice.channel.connect()  # bot connects to voice channel ONLY IF the member who called the command is already in the channel
-    voice.play(discord.FFmpegOpusAudio(source=f'sounds/{file}'))  # play sound effect
+    voice.play(discord.FFmpegPCMAudio(executable="C:/Users/Darell/Downloads/ffmpeg.exe",
+                                      source=file))  # play sound effect
 
     # if (message.guild.voice_client.is_playing() == False): #PLEASE GET THIS SHIT TO WORK #TODO - REMOVE THE NEED FOR A SLEEP TIMER
-        # await.message.guild.voice_client.disconect()
+    # await.message.guild.voice_client.disconect()
     time.sleep(sleepTime)  # wait 5 seconds
     await message.guild.voice_client.disconnect()  # disconnect bot once audio finishes playing
 
@@ -33,9 +36,10 @@ async def print_commands(message):
 # print all the sounds the bot can do
 async def print_sounds(message):
     await message.channel.send("!wow - cute uwu anime wow\n"
-                              "!jazz - you like jazz? :smirk:\n"
-                              "!hello - :frowning:\n"
-                              "!headshot - MY HANDS ARE SHAKING\n")
+                               "!jazz - you like jazz? :smirk:\n"
+                               "!hello - :frowning:\n"
+                               "!headshot - MY HANDS ARE SHAKING\n"
+                               "!thot - IF SHE BREATHES SHES A THOOOT\n")
 
 
 # Function that takes a list of members to move and their destination. Assumes that all members in the list are going to the same place
@@ -43,52 +47,75 @@ async def move_member(movingMembers, destination):
     for i in movingMembers:
         await i.edit(voice_channel=destination)
 
-
+        
 @client.event  # Bot responding to specific strings or commands from users
 async def on_message(message):
-    if message.content == "!hello":  # Basic printing
+    if message.author.bot:
+        return
+
+    userInput = message.content.split()
+
+    print(userInput)
+    if userInput[0] == "!hello":  # Basic printing
         await message.channel.send(str(message.author) + " why did she leave me...")
 
-    if message.content == "!jackboxtime":  # TODO - REFACTOR THIS
+    if userInput[0] == "!jackboxtime":  # TODO - REFACTOR THIS
         jackboxChannel = discord.utils.get(client.get_all_channels(), name='jackbox')  # return voice channel object
         generalChannel = discord.utils.get(client.get_all_channels(), name='General')  # return voice channel object
 
         currentMembers = []
 
-        for member in generalChannel.members:
+        for member in generalChannel.members:  # Get all current members connected to the channel
             currentMembers.append(member)
+
+        for i in range(1, len(userInput)):
+            if closeEnough(userInput[i], currentMembers[i]):
+                currentMembers.remove(i)
 
         await move_member(currentMembers, jackboxChannel)
 
-    if message.content == "!generaltime":  # TODO - FIX THIS
+    if userInput[0] == "!generaltime":  # TODO - FIX THIS
         generalChannel = discord.utils.get(client.get_all_channels(), name='General')  # return voice channel object
         jackboxChannel = discord.utils.get(client.get_all_channels(), name='jackbox')  # return voice channel object
 
         currentMembers = []
+        currentMembers = []
 
-        for member in jackboxChannel.members:
+        for member in jackboxChannel.members:  # Get all current members connected to the channel
             currentMembers.append(member)
 
         await move_member(currentMembers, generalChannel)
 
-    if message.content == "!help":  # List all possible commands the bot will respond to
+    if userInput[0] == "!help":  # List all possible commands the bot will respond to
         await print_commands(message)
 
-    if message.content == "!help sounds":
+    if userInput[0] == "!help sounds":
         await print_sounds(message)
 
     # Sound effect commands
-    if message.content == "!wow":  # play anime wow sound effect
+    if userInput[0] == "!wow":  # play anime wow sound effect
         await play_sound(message, "wow.mp3", 2)
 
-    if message.content == "!jazz":  # play jazz sound effect
+    if userInput[0] == "!jazz":  # play jazz sound effect
         await play_sound(message, "jazz.mp3", 1)
 
-    if message.content == "!headshot":  # play BOOM HEADSHOT effect
+    if userInput[0] == "!headshot":  # play BOOM HEADSHOT effect
         await play_sound(message, "headshot.mp3", 9)
 
-    if message.content == "!test":  # play BOOM HEADSHOT effect
-        await play_sound(message, "this_is_where_mp3s_go.mp3", 9)
+    if userInput[0] == "!thot":  # play thot sound effect
+        await play_sound(message, "thot.mp3", 5)
+
+    if userInput[0] == "!poll":
+        pollQuestion = ""
+        for i in range(1, len(userInput)):
+            pollQuestion += userInput[i]
+
+        await message.channel.send(pollQuestion)
+        await message.add_reaction(emoji='👍')
+
+    if userInput[0] == "!stop":
+        await message.guild.voice_client.disconnect()  # disconnect bot
+
 
 # end
 client.run(TOKEN)
