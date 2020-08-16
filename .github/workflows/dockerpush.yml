@@ -1,9 +1,8 @@
 name: Docker Push
 
 on:
-  release:
-    types: [published]
-
+  push:
+    branches: [ master ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,7 +11,7 @@ jobs:
       - name: Build and push Docker images
         uses: mr-smithers-excellent/docker-build-push@v3
         with:
-          image: discord-bot/darell-bot
+          image: discordbot/darell-bot
           registry: docker.pkg.github.com
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
