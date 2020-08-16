@@ -84,7 +84,7 @@ async def on_message(message):
     if userInput[0] == "!help" and userInput[1] == "sounds": # List all sounds that the bot can play
         await print_sounds(message)
         
-    if userInput[0] == "!help":  # List all possible commands the bot will respond to
+    elif userInput[0] == "!help":  # List all possible commands the bot will respond to
         await print_commands(message)
         
     # Sound effect commands
