@@ -35,8 +35,7 @@ async def print_sounds(message):
     await message.channel.send("!wow - cute uwu anime wow\n"
                                "!jazz - you like jazz? :smirk:\n"
                                "!thot - IF SHE BREATHES SHES A THOOOT\n"
-                               "!headshot - MY HANDS ARE SHAKING\n"
-                               "!thot - IF SHE BREATHES SHES A THOOOT\n")
+                               "!headshot - MY HANDS ARE SHAKING\n")
 
 
 # Function that takes a list of members to move and their destination. Assumes that all members in the list are going to the same place
@@ -86,7 +85,7 @@ async def on_message(message):
     if userInput[0] == "!help":  # List all possible commands the bot will respond to
         await print_commands(message)
 
-    if userInput[0] == "!help" and userInput[1] == "sounds":
+    elif userInput[0] == "!help" and userInput[1] == "sounds":
         await print_sounds(message)
 
     # Sound effect commands
