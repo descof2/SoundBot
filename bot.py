@@ -28,6 +28,7 @@ async def play_sound(message, file, sleepTime):
 # print all the commands the bot can do
 async def print_commands(message):
     await message.channel.send("!help - list all usable commands \n"
+                               "!hello - :frowning:\n"
                                "!help sounds - list all usable sounds \n"
                                "!jackboxtime - Move everyone to jackbox channel. Include names after the command to exclude moving those users [COMING SOON]\n"
                                "!generaltime - Move everyone from jackbox back to general")
@@ -37,7 +38,7 @@ async def print_commands(message):
 async def print_sounds(message):
     await message.channel.send("!wow - cute uwu anime wow\n"
                                "!jazz - you like jazz? :smirk:\n"
-                               "!hello - :frowning:\n"
+                               "!thot - IF SHE BREATHES SHES A THOOOT\n"
                                "!headshot - MY HANDS ARE SHAKING\n"
                                "!thot - IF SHE BREATHES SHES A THOOOT\n")
 
