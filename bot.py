@@ -82,12 +82,10 @@ async def on_message(message):
 
         await move_member(currentMembers, generalChannel)
 
-    
-
     if userInput[0] == "!help" and userInput[1] == "sounds":
         await print_sounds(message)
         
-    elif userInput[0] == "!help":  # List all possible commands the bot will respond to
+    if userInput[0] == "!help":  # List all possible commands the bot will respond to
         await print_commands(message)
         
     # Sound effect commands
