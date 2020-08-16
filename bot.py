@@ -69,9 +69,9 @@ async def on_message(message):
         for member in generalChannel.members:  # Get all current members connected to the channel
             currentMembers.append(member)
 
-        for i in range(1, len(userInput)):
-            if closeEnough(userInput[i], currentMembers[i]):
-                currentMembers.remove(i)
+        #for i in range(1, len(userInput)): #TODO
+         #   if closeEnough(userInput[i], currentMembers[i]):
+          #      currentMembers.remove(i)
 
         await move_member(currentMembers, jackboxChannel)
 
