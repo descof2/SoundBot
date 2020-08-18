@@ -27,7 +27,8 @@ async def print_commands(message):
                                "!hello - :frowning:\n"
                                "!help sounds - list all usable sounds \n"
                                "!jackboxtime - Move everyone to jackbox channel. Include names after the command to exclude moving those users [COMING SOON]\n"
-                               "!generaltime - Move everyone from jackbox back to general")
+                               "!generaltime - Move everyone from jackbox back to general\n"
+                               "!poll [Question] - Creates a poll for users to vote on")
 
 
 # Print all the sounds the bot can play
@@ -42,6 +43,18 @@ async def print_sounds(message):
 async def move_member(movingMembers, destination):
     for i in movingMembers:
         await i.edit(voice_channel=destination)
+        
+        
+# Function that takes user's message along with associated message object and prints poll question along with a thumbs up and thumbs down reaction	
+# allowing users to vote	
+async def create_poll(userInput, message):	
+    pollText = ""	
+    for i in range(1, len(userInput)):	
+        pollText += userInput[i] + " "	
+        
+    pollMessage = await message.channel.send(pollText)	# Bot prints poll question 
+    await pollMessage.add_reaction(emoji='👍')	# And then adds reactions to that new poll question 
+    await pollMessage.add_reaction(emoji='👎')	
 
         
 @client.event  # Bot responding to specific strings or commands from users
@@ -69,11 +82,10 @@ async def on_message(message):
 
         await move_member(currentMembers, jackboxChannel)
 
-    if userInput[0] == "!generaltime":  # TODO - FIX THIS
+    if userInput[0] == "!generaltime":  # TODO - REFACTOR THIS 
         generalChannel = discord.utils.get(client.get_all_channels(), name='General')  # return voice channel object
         jackboxChannel = discord.utils.get(client.get_all_channels(), name='jackbox')  # return voice channel object
 
-        currentMembers = []
         currentMembers = []
 
         for member in jackboxChannel.members:  # Get all current members connected to the channel
@@ -89,28 +101,23 @@ async def on_message(message):
         await print_commands(message)
         
     # Sound effect commands
-    if userInput[0] == "!wow":  # play anime wow sound effect
+    if userInput[0] == "!wow":  # Play anime wow sound effect
         await play_sound(message, "wow.mp3", 2)
 
-    if userInput[0] == "!jazz":  # play jazz sound effect
+    if userInput[0] == "!jazz":  # Play jazz sound effect
         await play_sound(message, "jazz.mp3", 1)
 
-    if userInput[0] == "!headshot":  # play BOOM HEADSHOT effect
+    if userInput[0] == "!headshot":  # Play BOOM HEADSHOT effect
         await play_sound(message, "headshot.mp3", 9)
 
-    if userInput[0] == "!thot":  # play thot sound effect
+    if userInput[0] == "!thot":  # Play thot sound effect
         await play_sound(message, "thot.mp3", 5)
 
-    if userInput[0] == "!poll": #TODO
-        pollQuestion = ""
-        for i in range(1, len(userInput)):
-            pollQuestion += userInput[i]
-
-        await message.channel.send(pollQuestion)
-        await message.add_reaction(emoji='👍')
-
-    if userInput[0] == "!stop":
-        await message.guild.voice_client.disconnect()  # Force disconnect bot from voice
+    if userInput[0] == "!poll": 
+       await create_poll(userInput, message)
+    
+    if userInput[0] == "!stop": # Force disconnect bot from voice
+        await message.guild.voice_client.disconnect()  
 
     userInput = [] # Clean out the list after use
     
