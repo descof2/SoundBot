@@ -7,7 +7,6 @@ COPY . /app
 WORKDIR /app
 RUN pip install pipenv
 
-RUN pipenv install
-RUN pip install google-api-python-client
+RUN pipenv sync
 
 ENTRYPOINT ["pipenv", "run", "python", "bot.py"]
