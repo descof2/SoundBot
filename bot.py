@@ -1,5 +1,6 @@
 import os
 import discord
+import random
 import time
 from googleapiclient.discovery import build
 
