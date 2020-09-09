@@ -1,15 +1,43 @@
 import os
 import discord
 import time
+from googleapiclient.discovery import build
 
 client = discord.Client()
 TOKEN = os.environ['BOT_TOKEN']
+YT_TOKEN = os.environ['YT_TOKEN']
 
 @client.event  # startup
 async def on_ready():
     print(f'{client.user} has connected to Discord!')
 
 
+# Function that will take in a youtube channel's ID and randomly print one of their video's URL into channel
+# Currently this function only randomly picks from the channel's latest 50 videos. If a channel has thousands 
+# of videos, this would lead to a lot of API calls. 
+# TODO - Get latest 150~ videos -> 3 api calls 
+async def print_random_video(message, channelID):
+    youtube = build('youtube', 'v3', developerKey=YT_TOKEN)  # Create youtube object
+    request = youtube.channels().list(part='contentDetails', id=channelID)
+    response = request.execute()
+
+    playlistID = response['items'][0]['contentDetails']['relatedPlaylists']['uploads'] # All uploads are stored in a single playlist 
+
+    request = youtube.playlistItems().list(part="contentDetails", playlistId=playlistID, maxResults=50)
+    response = request.execute()
+
+    uploadList = []  # Hold every uploadID within the upload playlist
+
+    for i in response['items']: # Adding every uploadID to list 
+        if i['kind'] == "youtube#playlistItem":
+            uploadList.append(i['contentDetails']['videoId']) 
+
+    totalUploads = response['pageInfo']['totalResults'] # Total public uploads on the youtube channel
+
+    await message.channel.send("This channel has " + str(totalUploads) + " uploads. Here's one: \n" "https://www.youtube.com/watch?v=" + random.choice(uploadList))
+
+    
+    
 # Function that will connect bot to channel, play sound effect and then disconnect according to the sleep timer provided
 async def play_sound(message, file, sleepTime):
     voice = await message.author.voice.channel.connect()  # bot connects to voice channel ONLY IF the member who called the command is already in the channel
@@ -113,11 +141,19 @@ async def on_message(message):
     if userInput[0] == "!thot":  # Play thot sound effect
         await play_sound(message, "thot.mp3", 5)
 
-    if userInput[0] == "!poll": 
+    if userInput[0] == "!poll": # Create a poll with thumbs up/down reactions
        await create_poll(userInput, message)
     
     if userInput[0] == "!stop": # Force disconnect bot from voice
         await message.guild.voice_client.disconnect()  
+        
+    if userInput[0] == "!joey": # Post random JoeysWorldTour video
+        joeysID = "UCC9uqoIkY8Nd7J9Gnk98W1w"
+        await print_random_video(message, joeysID)
+
+    if userInput[0] == "!chugs": # Post random BadlandsChugs video
+        chugsID = "UCIvMEZips_QKqajfXGY_C5Q"
+        await print_random_video(message, chugsID)
 
     userInput = [] # Clean out the list after use
     
