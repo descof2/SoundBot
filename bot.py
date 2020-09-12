@@ -145,7 +145,7 @@ async def on_message(message):
         await play_sound(message, "thot.mp3", 5)
       
     if userInput[0] == "!sad": # Play Juice Wrld's Lucid Dreams clip
-        if str(message.author) == "TheeAlbinoTree#7489": # Only allow Tom Mckernan the ability to use the sad command
+        if str(message.author) == "TheeAlbinoTree#7487": # Only allow Tom Mckernan the ability to use the sad command
             await play_sound(message, "juice.mp3", 3)
         else:
             await message.channel.send("You are not sad enough to use this command :( ")
