@@ -143,6 +143,9 @@ async def on_message(message):
 
     if userInput[0] == "!thot":  # Play thot sound effect
         await play_sound(message, "thot.mp3", 5)
+    
+    if userInput[0] == "!booey": # play bababooey sound effect
+        await play_sound(message, "bababooey.mp3", 1)
       
     if userInput[0] == "!sad": # Play Juice Wrld's Lucid Dreams clip
         if str(message.author) == "TheeAlbinoTree#7487": # Only allow Tom Mckernan the ability to use the sad command
