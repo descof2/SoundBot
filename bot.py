@@ -5,8 +5,8 @@ import time
 from googleapiclient.discovery import build
 
 client = discord.Client()
-TOKEN = os.environ['BOT_TOKEN']
-YT_TOKEN = os.environ['YT_TOKEN']
+TOKEN = os.environ['BOT_TOKEN'] # Discord API token
+YT_TOKEN = os.environ['YT_TOKEN'] # Youtube Data API token
 
 @client.event  # startup
 async def on_ready():
@@ -67,7 +67,8 @@ async def print_sounds(message):
     await message.channel.send("!wow - cute uwu anime wow\n"
                                "!jazz - you like jazz? :smirk:\n"
                                "!thot - IF SHE BREATHES SHES A THOOOT\n"
-                               "!headshot - MY HANDS ARE SHAKING\n")
+                               "!headshot - MY HANDS ARE SHAKING\n"
+                               "!booey - bababooey :smirk:\n")
 
 
 # Function that takes a list of members to move and their destination. Assumes that all members in the list are going to the same place
