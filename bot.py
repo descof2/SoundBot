@@ -80,11 +80,13 @@ async def move_member(movingMembers, destination):
 # Function that takes user's message along with associated message object and prints poll question along with a thumbs up and thumbs down reaction	
 # allowing users to vote	
 async def create_poll(userInput, message):	
-    pollText = ""	
-    for i in range(1, len(userInput)):	
-        pollText += userInput[i] + " "	
-        
-    pollMessage = await message.channel.send(pollText)	# Bot prints poll question 
+    pollText = ""
+    for i in range(1, len(userInput)):
+        pollText += userInput[i] + " "
+
+    await message.delete()  # Delete the original call for the !poll command for less clutter 
+    
+    pollMessage = await message.channel.send(pollText + "- " + str(message.author))  # Print the original poll and the author who created it 
     await pollMessage.add_reaction(emoji='👍')	# And then adds reactions to that new poll question 
     await pollMessage.add_reaction(emoji='👎')	
 
