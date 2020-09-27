@@ -149,6 +149,9 @@ async def on_message(message):
     
     if userInput[0] == "!booey": # play bababooey sound effect
         await play_sound(message, "bababooey.mp3", 1)
+        
+    if userInput[0] == "!hoes": # play hoes mad sound effect
+        await play_sound(message, "hoesmad.mp3", 6)
       
     if userInput[0] == "!sad": # Play Juice Wrld's Lucid Dreams clip
         if str(message.author) == "TheeAlbinoTree#7487": # Only allow Tom Mckernan the ability to use the sad command
