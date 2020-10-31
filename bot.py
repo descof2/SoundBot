@@ -44,26 +44,26 @@ async def on_message(message):
 
     # Sound effect commands
     if userInput[0] == "!wow":  # Play anime wow sound effect
-        await play_sound(message, "wow.mp3", 2)
+        await play_sound(message, "wow.mp3")
 
     if userInput[0] == "!jazz":  # Play jazz sound effect
-        await play_sound(message, "jazz.mp3", 1)
+        await play_sound(message, "jazz.mp3")
 
     if userInput[0] == "!headshot":  # Play BOOM HEADSHOT effect
-        await play_sound(message, "headshot.mp3", 9)
+        await play_sound(message, "headshot.mp3")
 
     if userInput[0] == "!thot":  # Play thot sound effect
-        await play_sound(message, "thot.mp3", 5)
+        await play_sound(message, "thot.mp3")
     
     if userInput[0] == "!booey": # play bababooey sound effect
-        await play_sound(message, "bababooey.mp3", 1)
+        await play_sound(message, "bababooey.mp3")
         
     if userInput[0] == "!hoes": # play hoes mad sound effect
-        await play_sound(message, "hoesmad.mp3", 6)
+        await play_sound(message, "hoesmad.mp3")
       
     if userInput[0] == "!sad": # Play Juice Wrld's Lucid Dreams clip
         if str(message.author) == "TheeAlbinoTree#7487": # Only allow Tom Mckernan the ability to use the sad command
-            await play_sound(message, "juice.mp3", 3)
+            await play_sound(message, "juice.mp3")
         else:
             await message.channel.send("You are not sad enough to use this command :( ")
 
