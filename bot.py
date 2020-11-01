@@ -13,8 +13,7 @@ async def on_ready():
 # Function that will connect bot to channel, play sound effect and then disconnect according to the sleep timer provided
 async def play_sound(message, file):
     voice = await message.author.voice.channel.connect()  # bot connects to voice channel ONLY IF the member who called the command is already in the channel
-    voice.play(discord.FFmpegPCMAudio(executable="C:/Users/Darell/Downloads/ffmpeg.exe",
-                                      source=file))  # play sound effect
+     voice.play(discord.FFmpegOpusAudio(source=f'sounds/{file}'))  # play sound effect
 
     while discord.VoiceClient.is_playing(voice):
         time.sleep(.1)
