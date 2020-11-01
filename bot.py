@@ -9,15 +9,13 @@ TOKEN = os.environ['BOT_TOKEN'] # Discord API token
 async def on_ready():
     print(f'{client.user} has connected to Discord!')
 
-
+  voice.play(discord.FFmpegOpusAudio(source=f'sounds/{file}'))  # play sound effect
 # Function that will connect bot to channel, play sound effect and then disconnect according to the sleep timer provided
-async def play_sound(message, file):
+async def play_sound(message, file, sleepTime):
     voice = await message.author.voice.channel.connect()  # bot connects to voice channel ONLY IF the member who called the command is already in the channel
     voice.play(discord.FFmpegOpusAudio(source=f'sounds/{file}'))  # play sound effect
 
-    while discord.VoiceClient.is_playing(voice):
-        time.sleep(.1)
-
+    time.sleep(sleepTime)  # wait 5 seconds
     await message.guild.voice_client.disconnect()  # disconnect bot once audio finishes playing
 
 
@@ -55,7 +53,7 @@ async def on_message(message):
         await play_sound(message, "thot.mp3")
     
     if userInput[0] == "!booey": # play bababooey sound effect
-        await play_sound(message, "bababooey.mp3")
+        await play_sound(message, "bababooey.mp3", 2)
         
     if userInput[0] == "!hoes": # play hoes mad sound effect
         await play_sound(message, "hoesmad.mp3")
