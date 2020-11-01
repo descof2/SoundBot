@@ -10,10 +10,11 @@ async def on_ready():
     print(f'{client.user} has connected to Discord!')
 
 
-# Function that will connect bot to channel, play sound effect and then disconnect according to the sleep timer provided
+# Function that will connect bot to channel, play sound effect and then disconnect once the effect is over
 async def play_sound(message, file):
     voice = await message.author.voice.channel.connect()  # bot connects to voice channel ONLY IF the member who called the command is already in the channel
     voice.play(discord.FFmpegOpusAudio(source=f'sounds/{file}'))  # play sound effect
+    # If you are running it locally replace the above line with voice.play(discord.FFmpegPCMAudio(executable="C://WhereYouSavedTheExe//ffmpeg.exe",source=file)) 
 
     while discord.VoiceClient.is_playing(voice):
         time.sleep(.1)
@@ -42,22 +43,22 @@ async def on_message(message):
             await print_sounds(message)
 
     # Sound effect commands
-    if userInput[0] == "!wow":  # Play anime wow sound effect
+    if userInput[0] == "!wow": 
         await play_sound(message, "wow.mp3")
 
-    if userInput[0] == "!jazz":  # Play jazz sound effect
+    if userInput[0] == "!jazz": 
         await play_sound(message, "jazz.mp3")
 
-    if userInput[0] == "!headshot":  # Play BOOM HEADSHOT effect
+    if userInput[0] == "!headshot": 
         await play_sound(message, "headshot.mp3")
 
-    if userInput[0] == "!thot":  # Play thot sound effect
+    if userInput[0] == "!thot": 
         await play_sound(message, "thot.mp3")
     
-    if userInput[0] == "!booey": # play bababooey sound effect
+    if userInput[0] == "!booey":
         await play_sound(message, "bababooey.mp3")
         
-    if userInput[0] == "!hoes": # play hoes mad sound effect
+    if userInput[0] == "!hoes": 
         await play_sound(message, "hoesmad.mp3")
       
     if userInput[0] == "!sad": # Play Juice Wrld's Lucid Dreams clip
