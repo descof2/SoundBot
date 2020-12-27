@@ -69,7 +69,7 @@ async def on_message(message):
             await message.channel.send("You are not sad enough to use this command :( ")
             
     if userInput[0] == "!bunger": # Select from a group of 8 bunger sound files
-        bungerFileName = "bunger" + str(randInt(1,8) + ".mp3"
+        bungerFileName = "bunger" + str(randInt(1,8)) + ".mp3"
         await play_sound(message, bungerFileName)
 
     userInput = [] # Clean out the list after use
