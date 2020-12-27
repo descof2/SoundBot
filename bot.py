@@ -1,6 +1,7 @@
 import os
 import discord
 import time
+from random import choice 
 
 client = discord.Client()
 TOKEN = os.environ['BOT_TOKEN'] # Discord API token
@@ -66,6 +67,10 @@ async def on_message(message):
             await play_sound(message, "juice.mp3")
         else:
             await message.channel.send("You are not sad enough to use this command :( ")
+            
+    if userInput[0] == "!bunger": # Select from a group of 8 bunger sound files
+        bungerFileName = "bunger" + str(randInt(1,8) + ".mp3"
+        await play_sound(message, bungerFileName)
 
     userInput = [] # Clean out the list after use
     
