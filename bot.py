@@ -1,7 +1,7 @@
 import os
 import discord
 import time
-from random import choice 
+from random import randint
 
 client = discord.Client()
 TOKEN = os.environ['BOT_TOKEN'] # Discord API token
