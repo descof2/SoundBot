@@ -61,6 +61,9 @@ async def on_message(message):
         
     if userInput[0] == "!hoes": 
         await play_sound(message, "hoesmad.mp3")
+        
+    if userInput[0] == "!pushingp": 
+        await play_sound(message, "pushingp.mp3")
       
     if userInput[0] == "!sad": # Play Juice Wrld's Lucid Dreams clip
         if str(message.author) == "TheeAlbinoTree#7487": # Only allow Tom Mckernan the ability to use the sad command
